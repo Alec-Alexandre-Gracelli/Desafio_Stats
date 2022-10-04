@@ -1,5 +1,7 @@
 ﻿using Dapper;
 using Desafio_Stats.Data;
+using Desafio_Stats.Models;
+using Desafio_Stats.Models.Enum;
 using Desafio_Stats.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

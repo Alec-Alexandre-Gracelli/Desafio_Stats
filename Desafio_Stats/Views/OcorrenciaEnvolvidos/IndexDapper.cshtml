@@ -1,38 +1,75 @@
 ﻿@model IEnumerable<Desafio_Stats.ViewModel.ConsultaDapperViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    var consulta = ViewBag.Consulta;
+
+    var consultaSerializada = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(consulta));
 }
+<canvas id="consultaDapper" width="600" height="250">
+</canvas>
 
-<h1>Index</h1>
+@section Scripts{
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script>
+        var consultaStatus = @consultaSerializada;
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Qtd)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Condicao)
-            </th>
-            
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Qtd)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Condicao)
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+
+        var ctx = document.getElementById("consultaDapper");
+        var minhaConsulta = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: consultaStatus,
+                datasets: [{
+                    label: 'Resultado',
+                    fill: false,
+                    data: consultaStatus,
+                    backgroundColor: '#E91E63',
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(255,99,132,1)',
+                    ],
+                    borderWidth: 1
+                },
+                ]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+                title: {
+                    display: true,
+                    text: 'Tipos de ocorrência'
+                },
+                responsive: true,
+                tooltips: {
+                    callbacks: {
+                        labelColor: function (tooltipItem, chart) {
+                            return {
+                                borderColor: 'rgb(255, 0, 20)',
+                                backgroundColor: 'rgb(255,20, 0)'
+                            }
+                        }
+                    }
+                },
+                legend: {
+                    labels: {
+                        fontColor: 'red',
+                    }
+                }
+            }
+        });
+                                
+    </script>
+    }
+
+
+
+
