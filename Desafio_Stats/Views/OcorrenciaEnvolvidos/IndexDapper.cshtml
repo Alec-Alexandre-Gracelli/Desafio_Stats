@@ -1,9 +1,12 @@
 ﻿@model IEnumerable<Desafio_Stats.ViewModel.ConsultaDapperViewModel>
 
 @{
-    var consulta = ViewBag.Consulta;
+    var quantidade = ViewBag.Quantidade;
+    var condicao = ViewBag.Condicao;
 
-    var consultaSerializada = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(consulta));
+    var quantidadeSerializada = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(quantidade));
+    var condicaoSerializada = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(condicao));
+
 }
 <canvas id="consultaDapper" width="600" height="250">
 </canvas>
@@ -11,18 +14,18 @@
 @section Scripts{
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <script>
-        var consultaStatus = @consultaSerializada;
-
+        var consultaQuantidade = @quantidadeSerializada;
+        var consultaCondicao = @condicaoSerializada;
 
         var ctx = document.getElementById("consultaDapper");
-        var minhaConsulta = new Chart(ctx, {
+        var consultaDapper = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: consultaStatus,
+                labels: consultaCondicao,
                 datasets: [{
                     label: 'Resultado',
                     fill: false,
-                    data: consultaStatus,
+                    data: consultaCondicao,
                     backgroundColor: '#E91E63',
                     borderColor: [
                         'rgba(255,99,132,1)',
@@ -66,7 +69,9 @@
                 }
             }
         });
-                                
+
+
+
     </script>
     }
 

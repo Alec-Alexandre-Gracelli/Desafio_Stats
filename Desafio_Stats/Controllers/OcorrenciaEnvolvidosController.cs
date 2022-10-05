@@ -27,7 +27,19 @@ namespace Desafio_Stats.Controllers
             var dapper = (await _context.Database.GetDbConnection()
              .QueryAsync<ConsultaDapperViewModel>(sql: sql)).ToList();
 
-            return View(dapper);
+            int quantidade = 0;
+            string condicao = "";
+
+            foreach(var item in dapper)
+            {
+                quantidade += item.Qtd;
+                condicao += item.Condicao.ToString();
+            }
+
+            ViewBag.Quantidade = quantidade;
+            ViewBag.Condicao = condicao;
+
+            return View();
         }
     }
 }
