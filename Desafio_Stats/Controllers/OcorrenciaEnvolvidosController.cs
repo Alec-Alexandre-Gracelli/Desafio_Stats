@@ -32,14 +32,13 @@ namespace Desafio_Stats.Controllers
 
             foreach(var item in dapper)
             {
-                quantidade += item.Qtd;
-                condicao += item.Condicao.ToString();
+                quantidade = item.Qtd ;
+                ViewBag.Quantidade = new List<int> { quantidade };
+                condicao = item.Condicao.ToString() ;
+                ViewBag.Condicao = new List<string> { condicao };
             }
 
-            ViewBag.Quantidade = quantidade;
-            ViewBag.Condicao = condicao;
-
-            return View();
+            return View(dapper);
         }
     }
 }
