@@ -5,6 +5,7 @@ using Desafio_Stats.Models.Enum;
 using Desafio_Stats.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Desafio_Stats.Controllers
@@ -18,7 +19,7 @@ namespace Desafio_Stats.Controllers
             _context = context;
         }
 
-       
+
 
         public async Task<IActionResult> IndexDapper()
         {
@@ -27,16 +28,17 @@ namespace Desafio_Stats.Controllers
             var dapper = (await _context.Database.GetDbConnection()
              .QueryAsync<ConsultaDapperViewModel>(sql: sql)).ToList();
 
-            int quantidade = 0;
-            string condicao = "";
+            string quantidade="";//65, 59, 80, 81, 56, 55, 40
+            string condicao=""; //"Ocorrência 01", "Tráfico", "Assalto", "Roubo", "Furto", "Morte"
 
-            foreach(var item in dapper)
+            foreach (var item in dapper)
             {
-                quantidade = item.Qtd ;
-                ViewBag.Quantidade = new List<int> { quantidade };
-                condicao = item.Condicao.ToString() ;
-                ViewBag.Condicao = new List<string> { condicao };
+                quantidade += item.Qtd + ","  ;
+                condicao += $"'{item.Condicao}',";
             }
+
+            ViewBag.Quantidade = quantidade;
+            ViewBag.Condicao = condicao;
 
             return View(dapper);
         }

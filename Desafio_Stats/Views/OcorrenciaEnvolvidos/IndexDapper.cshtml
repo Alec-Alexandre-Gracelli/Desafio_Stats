@@ -2,39 +2,25 @@
 
 <canvas id="consultaDapper" width="600" height="250">
 </canvas>
-
-@{
-    var quantidadeDapper = ViewBag.Quantidade;
-    var condicaoDapper = ViewBag.Condicao;
-}
-
-<ul>
-    @foreach (int quantidade in quantidadeDapper)
-    {
-        <li>
-            @quantidade
-        </li>
-    }
-
-</ul>
-
-<p>@ViewBag.Quantidade</p>
+<h2>@ViewBag.Quantidade</h2>
+<h2>@ViewBag.Condicao</h2>
 
 
 @section Scripts{
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <script>
 
+        aDatasets1 = [@ViewBag.Quantidade];
 
         var ctx = document.getElementById("consultaDapper");
         var consultaDapper = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: consultaCondicao,
+                labels: [@Html.Raw(ViewBag.Condicao)],
                 datasets: [{
                     label: 'Resultado',
                     fill: false,
-                    data: consultaQuantidade,
+                    data: aDatasets1,
                     backgroundColor: '#E91E63',
                     borderColor: [
                         'rgba(255,99,132,1)',
